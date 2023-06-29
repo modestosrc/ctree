@@ -9,6 +9,24 @@
 #define ANSI_BLUE       "\x1B[34m"
 #define ANSI_GREEN      "\x1B[32m"
 #define ANSI_RED        "\x1B[31m"
+void caminho(char nomeDiretorio[], char caminhoCompleto[PATH_MAX]); 
+int offsetGalhos(char nomeDiretorio[]);
+void galhos(char caminhoCompleto[], int offset);
+int tree(char nomeDiretorio[], int offset);
+
+int main(void) {
+    char nomeDiretorio[PATH_MAX];
+
+    if (getcwd(nomeDiretorio, sizeof(nomeDiretorio)) == NULL) {
+        printf("Erro obtendo diretório atual!");
+        return 1;
+    }
+    
+    printf("%s\n", nomeDiretorio);
+    int offset = offsetGalhos(".");
+    if (tree(".", offset) == 1) return 1;
+    return 0;
+}
 
 void caminho(char nomeDiretorio[], char caminhoCompleto[PATH_MAX]) {
 
@@ -70,19 +88,5 @@ int tree(char nomeDiretorio[], int offset) {
     }
 
     closedir(diretorio);
-    return 0;
-}
-
-int main(void) {
-    char nomeDiretorio[PATH_MAX];
-
-    if (getcwd(nomeDiretorio, sizeof(nomeDiretorio)) == NULL) {
-        printf("Erro obtendo diretório atual!");
-        return 1;
-    }
-    
-    printf("%s\n", nomeDiretorio);
-    int offset = offsetGalhos(".");
-    if (tree(".", offset) == 1) return 1;
     return 0;
 }
